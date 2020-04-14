@@ -80,7 +80,7 @@ const std::unordered_map<std::string, CUTS> Analyzer::cut_num = {
 //////////////////////////////////////////////////////
 
 ///Constructor
-Analyzer::Analyzer(std::vector<std::string> infiles, std::string outfile, bool setCR, std::string configFolder) : goodParts(getArray()), genName_regex(".*([A-Z][^[:space:]]+)"){
+Analyzer::Analyzer(std::vector<std::string> infiles, std::string outfile, bool setCR, std::string configFolder, std::string year) : goodParts(getArray()), genName_regex(".*([A-Z][^[:space:]]+)"){
   std::cout << "setup start" << std::endl;
   
   routfile = new TFile(outfile.c_str(), "RECREATE", outfile.c_str(), ROOT::CompressionSettings(ROOT::kLZMA, 9));
@@ -208,6 +208,63 @@ Analyzer::Analyzer(std::vector<std::string> infiles, std::string outfile, bool s
     syst_histo=Histogramer(1, filespace+"Hist_syst_entries.in", filespace+"Cuts.in", outfile, isData, cr_variables,syst_names);
   systematics = Systematics(distats);
   jetScaleRes = JetScaleResolution("Pileup/Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt", "",  "Pileup/Spring16_25nsV6_MC_PtResolution_AK4PFchs.txt", "Pileup/Spring16_25nsV6_MC_SF_AK4PFchs.txt");
+  
+  
+  static std::map<std::string, std::string> jecTagsMC = {
+            {"2016" , "Summer16_07Aug2017_V11_MC"}, 
+            {"2017" , "Fall17_17Nov2017_V32_MC"}, 
+            {"2018" , "Autumn18_V19_MC"},
+            };
+
+  static std::map<std::string, std::string> jecTagsFastSim = {
+            {"2016" , "Summer16_FastSimV1_MC"},
+            {"2017" , "Fall17_FastSimV1_MC"},
+            {"2018" , "Autumn18_FastSimV1_MC"}};
+
+  static std::map<std::string, std::string>archiveTagsDATA = {
+          {"2016" , "Summer16_07Aug2017_V11_DATA"}, 
+          {"2017" , "Fall17_17Nov2017_V32_DATA"}, 
+          {"2018" , "Autumn18_V19_DATA"}
+          };
+
+  static std::map<std::string, std::string> jecTagsDATA = { 
+          {"2016B" , "Summer16_07Aug2017BCD_V11_DATA"}, 
+          {"2016C" , "Summer16_07Aug2017BCD_V11_DATA"}, 
+          {"2016D" , "Summer16_07Aug2017BCD_V11_DATA"}, 
+          {"2016E" , "Summer16_07Aug2017EF_V11_DATA"}, 
+          {"2016F" , "Summer16_07Aug2017EF_V11_DATA"}, 
+          {"2016G" , "Summer16_07Aug2017GH_V11_DATA"}, 
+          {"2016H" , "Summer16_07Aug2017GH_V11_DATA"}, 
+          {"2017B" , "Fall17_17Nov2017B_V32_DATA"}, 
+          {"2017C" , "Fall17_17Nov2017C_V32_DATA"}, 
+          {"2017D" , "Fall17_17Nov2017DE_V32_DATA"}, 
+          {"2017E" , "Fall17_17Nov2017DE_V32_DATA"}, 
+          {"2017F" , "Fall17_17Nov2017F_V32_DATA"}, 
+          {"2018A" , "Autumn18_RunA_V19_DATA"},
+          {"2018B" , "Autumn18_RunB_V19_DATA"},
+          {"2018C" , "Autumn18_RunC_V19_DATA"},
+          {"2018D" , "Autumn18_RunD_V19_DATA"},
+        };
+
+  static std::map<std::string, std::string> jerTagsMC = {
+          {"2016" , "Summer16_25nsV1_MC"},
+          {"2017" , "Fall17_V3_MC"},
+          {"2018" , "Autumn18_V7_MC"},
+        };
+  
+  
+  std::string jertag=jerTagsMC.end()->second;
+  if(!isData){
+    jertag=jerTagsMC[year];
+  }
+  jer = JME::JetResolution("Pileup/JRDatabase/textFiles/Summer16_25nsV1_DATA/Summer16_25nsV1_DATA_PtResolution_AK4PFchs.txt");
+  
+  //pars = ROOT.JetCorrectorParameters(os.path.join(self.jesInputFilePath, self.jesUncertaintyInputFileName),"Total")
+  //self.jesUncertainty = ROOT.JetCorrectionUncertainty(pars)
+  //self.params_sf_and_uncertainty = ROOT.PyJetParametersWrapper()
+  //self.params_resolution = ROOT.PyJetParametersWrapper()
+  //self.jer = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName))
+  //self.jerSF_and_Uncertainty = ROOT.PyJetResolutionScaleFactorWrapper(os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
 
 
 

@@ -36,6 +36,7 @@ struct CRTester;
 #include "Systematics.h"
 #include "JetScaleResolution.h"
 #include "DepGraph.h"
+#include "JetResolution.h"
 
 double normPhi(double phi);
 double absnormPhi(double phi);
@@ -48,7 +49,7 @@ static const int nTrigReq = 2;
 class Analyzer {
   friend class CRTester;
 public:
-  Analyzer(std::vector<std::string>, std::string, bool setCR = false, std::string configFolder="PartDet");
+  Analyzer(std::vector<std::string>, std::string, bool setCR = false, std::string configFolder="PartDet", std::string year="2016");
   ~Analyzer();
   void add_metadata(std::vector<std::string> infiles);
   void clear_values();
@@ -184,6 +185,7 @@ public:
 
   Systematics systematics;
   JetScaleResolution jetScaleRes;
+  JME::JetResolution jer;
   PartStats genStat;
 
   std::unordered_map<std::string, PartStats> distats;

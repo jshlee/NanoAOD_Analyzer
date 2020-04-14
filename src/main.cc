@@ -26,7 +26,7 @@ void usage() {
   exit(EXIT_FAILURE);
 }
 
-void parseCommandLine(int argc, char *argv[], std::vector<std::string> &inputnames, std::string &outputname, bool &setCR, bool &testRun, std::string &configFolder) {
+void parseCommandLine(int argc, char *argv[], std::vector<std::string> &inputnames, std::string &outputname, bool &setCR, bool &testRun, std::string &configFolder, std::string &year) {
   if(argc < 3) {
     std::cout << std::endl;
     std::cout << "You have entered too little arguments, please type:\n";
@@ -39,6 +39,11 @@ void parseCommandLine(int argc, char *argv[], std::vector<std::string> &inputnam
       continue;
     }else if (strcmp(argv[arg], "-t") == 0) {
       testRun = true;
+      continue;
+    }else if (strcmp(argv[arg], "-y") == 0) {
+      year=argv[arg+1];
+      std::cout << "Analyser: year " << year << std::endl;
+      arg++;
       continue;
     }else if (strcmp(argv[arg], "-C") == 0) {
       configFolder=argv[arg+1];
@@ -101,15 +106,16 @@ int main (int argc, char* argv[]) {
 
   std::string outputname;
   std::string configFolder="PartDet";
+  std::string year="2016";
   std::vector<std::string> inputnames;
 
 
   //get the command line options in a nice loop
-  parseCommandLine(argc, argv, inputnames, outputname, setCR, testRun, configFolder);
+  parseCommandLine(argc, argv, inputnames, outputname, setCR, testRun, configFolder, year);
 
 
   //setup the analyser
-  Analyzer testing(inputnames, outputname, setCR, configFolder);
+  Analyzer testing(inputnames, outputname, setCR, configFolder, year);
   //SpechialAnalysis spechialAna = SpechialAnalysis(&testing);
   //spechialAna.init();
 
