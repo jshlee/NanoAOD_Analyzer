@@ -257,10 +257,13 @@ Analyzer::Analyzer(std::vector<std::string> infiles, std::string outfile, bool s
   if(!isData){
     jertag=jerTagsMC[year];
   }
-  jer = JME::JetResolution("Pileup/JRDatabase/textFiles/Summer16_25nsV1_DATA/Summer16_25nsV1_DATA_PtResolution_AK4PFchs.txt");
+  
+  auto par=JetCorrectorParameters("Pileup/JRDatabase/textFiles/Summer16_07Aug2017GH_V11_DATA_UncertaintySources_AK4PFchs.txt","Total");
+  jer = JetResolution("Pileup/JRDatabase/textFiles/Summer16_25nsV1_DATA/Summer16_25nsV1_DATA_PtResolution_AK4PFchs.txt");
   
   //pars = ROOT.JetCorrectorParameters(os.path.join(self.jesInputFilePath, self.jesUncertaintyInputFileName),"Total")
   //self.jesUncertainty = ROOT.JetCorrectionUncertainty(pars)
+  
   //self.params_sf_and_uncertainty = ROOT.PyJetParametersWrapper()
   //self.params_resolution = ROOT.PyJetParametersWrapper()
   //self.jer = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName))

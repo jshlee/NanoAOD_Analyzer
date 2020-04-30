@@ -19,6 +19,13 @@ CMSSW_INC_PATHS += -isystem$(CMSSW_RELEASE_BASE)/src
 CMSSW_INC_PATHS += -isystem$(CMSSW_BOOST_BASE)/include
 #endif
 
+
+CMSSW_LIBS += -lCondFormatsJetMETObjects
+CMSSW_LIBS += -lPhysicsToolsUtilities
+#CMSSW_LIBS += -lFWCoreCommon -lFWCoreConcurrency -lFWCoreFWLite -lFWCoreFramework -lFWCoreFrameworkTest -lFWCoreFrameworkTestDummyForEventSetup -lFWCoreIntegration -lFWCoreIntegrationValueExample -lFWCoreIntegrationWaitingServer -lFWCoreMessageLogger -lFWCoreMessageService -lFWCoreParameterSet -lFWCoreParameterSetReader -lFWCorePluginManager -lFWCorePrescaleService -lFWCorePythonFramework -lFWCorePythonParameterSet -lFWCoreServiceRegistry -lFWCoreServiceRegistryTestDummyService -lFWCoreServices -lFWCoreSources -lFWCoreTFWLiteSelector -lFWCoreTFWLiteSelectorTest -lFWCoreTestProcessor -lFWCoreUtilities
+CMSSW_LIBS += -lFWCoreCommon -lFWCoreFWLite -lFWCoreFramework -lFWCoreMessageLogger -lFWCoreMessageService -lFWCoreParameterSet -lFWCoreParameterSetReader -lFWCorePluginManager -lFWCorePrescaleService -lFWCorePythonFramework -lFWCorePythonParameterSet -lFWCoreServiceRegistry -lFWCoreServices -lFWCoreSources -lFWCoreUtilities
+
+
 ifndef MYANA
 MYANA:=SpecialAna
 endif
@@ -35,7 +42,7 @@ LDSPEED = -O3
 EXTRA_CFLAGS:= -DMYANA=$(MYANA)/SpechialAnalysis.h
 EXTRA_LDFLAGS:=
 # Gather all additional flags
-EXTRA_CFLAGS  += $(CMSSW_INC_PATHS) -DSTANDALONE
+EXTRA_CFLAGS  += $(CMSSW_INC_PATHS)
 EXTRA_LDFLAGS += $(CMSSW_LIB_PATHS) $(CMSSW_LIBS)
 
 

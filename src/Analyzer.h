@@ -36,7 +36,9 @@ struct CRTester;
 #include "Systematics.h"
 #include "JetScaleResolution.h"
 #include "DepGraph.h"
-#include "JetResolution.h"
+#include "CondFormats/JetMETObjects/interface/JetResolution.h"
+#include "CondFormats/JetMETObjects/interface/JetCorrectorParameters.h"
+#include "CondFormats/JetMETObjects/interface/JetCorrectionUncertainty.h"
 
 double normPhi(double phi);
 double absnormPhi(double phi);
@@ -185,7 +187,7 @@ public:
 
   Systematics systematics;
   JetScaleResolution jetScaleRes;
-  JME::JetResolution jer;
+  JetResolution jer;
   PartStats genStat;
 
   std::unordered_map<std::string, PartStats> distats;
