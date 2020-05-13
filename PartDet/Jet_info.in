@@ -18,8 +18,8 @@ TauMatchingDeltaR  0.3
 EtaCut 0. 5.0
 PtCut 30.0
 
-ApplyLooseID 1
-ApplyTightID 0
+ApplyLooseID 0
+ApplyTightID 1
 
 RemoveOverlapWithMuon1s 1
 RemoveOverlapWithMuon2s 0
@@ -38,6 +38,8 @@ Tau2MatchingDeltaR 0.3
 
 RemoveOverlapWithBs 1
 BJMatchingDeltaR 0.3
+
+ApplyEEnoise2017Veto 1
 
 ########################################
 	        Jet2
@@ -46,8 +48,8 @@ BJMatchingDeltaR 0.3
 EtaCut 0. 5.0
 PtCut 30.0
 
-ApplyLooseID 1
-ApplyTightID 0
+ApplyLooseID 0
+ApplyTightID 1
 
 RemoveOverlapWithMuon1s 1
 RemoveOverlapWithMuon2s 0
@@ -67,14 +69,16 @@ Tau2MatchingDeltaR 0.3
 RemoveOverlapWithBs 1
 BJMatchingDeltaR 0.3
 
+ApplyEEnoise2017Veto 1
+
 ####################################
           CentralJet
 ###################################
 
 PtCut 30.0
 
-ApplyLooseID 1
-ApplyTightID 0
+ApplyLooseID 0
+ApplyTightID 1
 
 RemoveOverlapWithMuon1s 1
 RemoveOverlapWithMuon2s 0
@@ -90,6 +94,8 @@ RemoveOverlapWithTau1s 0
 RemoveOverlapWithTau2s 0
 Tau1MatchingDeltaR 0.3
 Tau2MatchingDeltaR 0.3
+
+ApplyEEnoise2017Veto 1
 
 ####################################
 	 FirstLeadingJet
@@ -118,6 +124,8 @@ RemoveOverlapWithTau2s 0
 Tau1MatchingDeltaR 0.3
 Tau2MatchingDeltaR 0.3
 
+ApplyEEnoise2017Veto 1
+
 ####################################
 	 SecondLeadingJet
 ###################################
@@ -127,8 +135,8 @@ DoDiscrByThisJet 1
 EtaCut 0.0 5.0
 PtCut 30.0
 
-ApplyLooseID 1
-ApplyTightID 0
+ApplyLooseID 0
+ApplyTightID 1
 
 RemoveOverlapWithMuon1s 1
 RemoveOverlapWithMuon2s 0
@@ -144,6 +152,8 @@ RemoveOverlapWithTau1s 0
 RemoveOverlapWithTau2s 0
 Tau1MatchingDeltaR 0.3
 Tau2MatchingDeltaR 0.3
+
+ApplyEEnoise2017Veto 1
 
 ###################################
     	     BJet
@@ -166,6 +176,8 @@ RemoveOverlapWithTau1s 0
 RemoveOverlapWithTau2s 0
 Tau1MatchingDeltaR 0.3
 Tau2MatchingDeltaR 0.3
+
+ApplyEEnoise2017Veto 1
 
 ApplyJetBTaggingCSVv2 0 
 ApplyJetBTaggingDeepCSV 1
