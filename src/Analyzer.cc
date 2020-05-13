@@ -1833,6 +1833,21 @@ void Analyzer::getGoodRecoLeptons(const Lepton& lep, const CUTS ePos, const CUTS
   return;
 }
 
+bool Analyzer::jetVetoEEnoise2017(int jet_index){
+  // Get the jet pT and raw factors to calculate the raw jet pt:
+  TLorentzVector jet_RecoP4 = _Jet->RecoP4(jet_index);
+  double jet_rawFactor = _Jet->rawFactor[jet_index];
+
+  double jet_rawPt = jet_RecoP4.Pt() * (1.0 - jet_rawFactor);
+
+  // Check if this jet is in the problematic pt-eta region: if yes, return true (veto)
+  if(jet_rawPt < 50.0 && (abs(jet_RecoP4.Eta()) > 2.65 && abs(jet_RecoP4.Eta()) < 3.139)){
+  	return true;
+  }
+  // Otherwise, return false (no veto)
+  return false;
+}
+
 ////Jet specific function for finding the number of jets that pass the cuts.
 //used to find the nubmer of good jet1, jet2, central jet, 1st and 2nd leading jets and bjet.
 void Analyzer::getGoodRecoJets(CUTS ePos, const PartStats& stats, const int syst) {
@@ -1848,11 +1863,15 @@ void Analyzer::getGoodRecoJets(CUTS ePos, const PartStats& stats, const int syst
   int i=0;
 
   for(auto lvec: *_Jet) {
+
     if(ePos == CUTS::eR1stJet || ePos == CUTS::eR2ndJet){
       break;
     }
+
     bool passCuts = true;
+
     double dphi1rjets = normPhi(lvec.Phi() - _MET->phi());
+
     if( ePos == CUTS::eRCenJet) passCuts = passCuts && (fabs(lvec.Eta()) < 2.5);
     else  passCuts = passCuts && passCutRange(fabs(lvec.Eta()), stats.pmap.at("EtaCut"));
     passCuts = passCuts && (lvec.Pt() > stats.dmap.at("PtCut")) ;
@@ -1860,8 +1879,9 @@ void Analyzer::getGoodRecoJets(CUTS ePos, const PartStats& stats, const int syst
     for( auto cut: stats.bset) {
       if(!passCuts) break;
 
+      else if(cut == "ApplyEEnoise2017Veto") passCuts = passCuts && !jetVetoEEnoise2017(i);
     /// BJet specific
-      // else if(cut == "ApplyJetBTagging") passCuts = passCuts && (_Jet->bDiscriminator[i] > stats.dmap.at("JetBTaggingCut")); // original	
+      //else if(cut == "ApplyJetBTagging") passCuts = passCuts && (_Jet->bDiscriminator[i] > stats.dmap.at("JetBTaggingCut")); // original	
       else if(cut == "ApplyJetBTaggingCSVv2") passCuts = passCuts && (_Jet->bDiscriminatorCSVv2[i] > stats.dmap.at("JetBTaggingCut")); 
       else if(cut == "ApplyJetBTaggingDeepCSV") passCuts = passCuts && (_Jet->bDiscriminatorDeepCSV[i] > stats.dmap.at("JetBTaggingCut"));
       else if(cut == "ApplyJetBTaggingDeepFlav") passCuts = passCuts && (_Jet->bDiscriminatorDeepFlav[i] > stats.dmap.at("JetBTaggingCut"));
@@ -1922,6 +1942,7 @@ void Analyzer::getGoodRecoBJets(CUTS ePos, const PartStats& stats, const int sys
 
   int i=0;
   for(auto lvec: *_Jet) {
+
     bool passCuts = true;
     if( ePos == CUTS::eRCenJet) passCuts = passCuts && (fabs(lvec.Eta()) < 2.5);
     else  passCuts = passCuts && passCutRange(fabs(lvec.Eta()), stats.pmap.at("EtaCut"));
@@ -1929,7 +1950,8 @@ void Analyzer::getGoodRecoBJets(CUTS ePos, const PartStats& stats, const int sys
 
     for( auto cut: stats.bset) {
       if(!passCuts) break;
-
+      // Apply the veto right here for 2017, so we skip the jets that are in the problematic region before anything else
+      else if(cut == "ApplyEEnoise2017Veto") passCuts = passCuts && !jetVetoEEnoise2017(i);
     /// BJet specific
       //else if(cut == "ApplyJetBTagging") passCuts = passCuts && (_Jet->bDiscriminator[i] > stats.dmap.at("JetBTaggingCut")); //original
       else if(cut == "ApplyJetBTaggingCSVv2") passCuts = passCuts && (_Jet->bDiscriminatorCSVv2[i] > stats.dmap.at("JetBTaggingCut")); 

@@ -121,6 +121,7 @@ public:
 
   int matchToGenPdg(const TLorentzVector& lvec, double minDR);
 
+  bool jetVetoEEnoise2017(int);
 
   void getGoodParticles(int);
   void getGoodGenHadronicTaus(const PartStats&);

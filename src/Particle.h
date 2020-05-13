@@ -181,7 +181,10 @@ public:
   int numberOfConstituents[MAXINDEX];
   int puID[MAXINDEX];
   int partonFlavour[MAXINDEX];
-
+  float rawFactor[MAXINDEX];
+  int matchingMuonIdx1[MAXINDEX];
+  int matchingMuonIdx2[MAXINDEX];
+  
  protected:
 
 };
