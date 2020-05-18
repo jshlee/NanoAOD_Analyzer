@@ -2,7 +2,7 @@
 #define analysis_h
 
 struct Analyzer;
-#include "src/Analyzer.h"
+#include "NanoAOD/Analyzer/src/Analyzer.h"
 
 class SpechialAnalysis {
 public:

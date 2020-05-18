@@ -1,10 +1,10 @@
-#include "Analyzer.h"
+#include "NanoAOD/Analyzer/src/Analyzer.h"
 #include <csignal>
 #define Q(x) #x
 #define QUOTE(x) Q(x)
-#include QUOTE(MYANA)
-
-
+//#include QUOTE(MYANA)
+//#include QUOTE("../SpecialAna/SpechialAnalysis.h")
+#include "NanoAOD/Analyzer/SpecialAna/SpechialAnalysis.h"
 
 bool do_break;
 void KeyboardInterrupt_endJob(int signum) {

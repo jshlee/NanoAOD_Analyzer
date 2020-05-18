@@ -15,7 +15,7 @@
 #include <TBranch.h>
 #include <TLorentzVector.h>
 #include "Particle.h"
-#include "mt2/mt2_bisect.hh"
+#include "mt2_bisect.hh"
 
 
 #include "tokenizer.hpp"

@@ -28,7 +28,7 @@ struct CRTester;
 #include "Histo.h"
 
 /////fix
-#include "./btagging/BTagCalibrationStandalone.h"
+#include "BTagCalibrationStandalone.h"
 
 #include "Cut_enum.h"
 #include "FillInfo.h"

@@ -1,0 +1,10 @@
+<bin name="Analyzer" file="main.cc">
+  <use name="root"/>
+  <use name="rootxml"/>
+  <lib name="Eve"/>
+  <lib name="EG"/>
+  <use name="NanoAOD/Analyzer"/>
+  <flags CXXFLAGS="-lTMVA"/>
+</bin>
+
+

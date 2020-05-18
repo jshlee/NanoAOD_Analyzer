@@ -1,0 +1,11 @@
+<use name="root"/>
+<use name="rootmath"/>
+<use name="rootcore"/>
+<use name="rootxml"/>
+<lib name="Eve"/>
+<lib name="EG"/>
+<flags CXXFLAGS="-g" />
+<export>
+  <lib name="1"/>
+</export>
+
