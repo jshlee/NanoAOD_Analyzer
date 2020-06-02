@@ -27,7 +27,9 @@ typedef std::vector<int>::iterator vec_iter;
 //////////////////////////////////////////////////////////////////
 
 //Filespace that has all of the .in files
-const std::string PUSPACE = "Pileup/";
+const char* env_p = std::getenv("CMSSW_BASE");
+const std::string PUSPACE = std::string(env_p) +"/src/NanoAOD/Analyzer/Pileup/";
+//const std::string PUSPACE = "Pileup/";
 
 
 //////////PUBLIC FUNCTIONS////////////////////
@@ -213,7 +215,7 @@ Analyzer::Analyzer(std::vector<std::string> infiles, std::string outfile, bool s
   
   systematics = Systematics(distats);
   
-  jetScaleRes = JetScaleResolution("Pileup/Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt", "",  "Pileup/Spring16_25nsV6_MC_PtResolution_AK4PFchs.txt", "Pileup/Spring16_25nsV6_MC_SF_AK4PFchs.txt");
+  jetScaleRes = JetScaleResolution(PUSPACE+"Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt", "",  PUSPACE+"Spring16_25nsV6_MC_PtResolution_AK4PFchs.txt", PUSPACE+"Spring16_25nsV6_MC_SF_AK4PFchs.txt");
 
 
 
@@ -2121,8 +2123,8 @@ void Analyzer::setupBJetSFInfo(const PartStats& stats, std::string year){
     btagsffilename = deepflavbtagsfcsvfiles[year];
   }
 
-  try{
-    btagcalib = BTagCalibration(btagalgoname, (PUSPACE+"BJetDatabase/"+btagsffilename).c_str());
+  try{    
+   btagcalib = BTagCalibration(btagalgoname, (PUSPACE+"BJetDatabase/"+btagsffilename).c_str());
 
     if(stats.bfind("UseBtagSF")){  
       std::cout << "-----------------------------------------------------------------------------------------" << std::endl;
@@ -3608,9 +3610,10 @@ void Analyzer::initializeWkfactor(std::vector<std::string> infiles) {
     return;
   }
   //W-jet k-factor Histograms:
-  TFile k_ele("Pileup/k_faktors_ele.root");
-  TFile k_mu("Pileup/k_faktors_mu.root");
-  TFile k_tau("Pileup/k_faktors_tau.root");
+  TString dataDir(PUSPACE);
+  TFile k_ele(dataDir+"k_faktors_ele.root");
+  TFile k_mu(dataDir+"k_faktors_mu.root");
+  TFile k_tau(dataDir+"k_faktors_tau.root");
 
   k_ele_h =dynamic_cast<TH1D*>(k_ele.FindObjectAny("k_fac_m"));
   k_mu_h  =dynamic_cast<TH1D*>(k_mu.FindObjectAny("k_fac_m"));
@@ -3619,7 +3622,7 @@ void Analyzer::initializeWkfactor(std::vector<std::string> infiles) {
   k_ele.Close();
   k_mu.Close();
   k_tau.Close();
-
+  
 }
 
 ///Normalizes phi to be between -PI and PI
